@@ -1,0 +1,14 @@
+def biggestPath(d: dict, way: str = '', this_key: str = '',
+                longest_way: str = ''):
+
+    def check_longest(some_way, longest):
+        return some_way if some_way.count('/') > longest.count('/') \
+                           or not longest else longest
+
+    this_way = f'{way}/{this_key}' if way else this_key
+    longest_way = check_longest(this_way, longest_way)
+    for key, val in d.items():
+        if isinstance(val, dict):
+            temp = biggestPath(val, this_way, key, longest_way)
+            longest_way = check_longest(temp, longest_way)
+    return longest_way
